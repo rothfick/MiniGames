@@ -12,21 +12,25 @@ import java.util.Set;
 public class LottoMiddleware {
     /**
      * -- GETTER --
-     *  Getter for inputReader.
-     *
-     *
+     * Getter for inputReader.
+     * <p>
+     * <p>
      * -- SETTER --
-     *  Setter for inputReader to facilitate dependency injection in tests.
+     * Setter for inputReader to facilitate dependency injection in tests.
      *
-     @return LottoInputReader instance
-      * @param inputReader LottoInputReader instance
+     * @return LottoInputReader instance
+     * @param inputReader LottoInputReader instance
      */
     @Setter
     @Getter
     private LottoInputReader inputReader;
     private LottoGenerator generator;
     private LottoMessageGenerator lottoMessageGenerator;
+    @Setter
+    @Getter
     private Set<Integer> inputUserNumbers;
+    @Setter
+    @Getter
     private Set<Integer> lottoNumbers;
 
     /**
@@ -59,12 +63,11 @@ public class LottoMiddleware {
     /**
      * Prints the results of the Lotto game.
      */
-    private void seeResultsOfTheLottoGame() {
+    void seeResultsOfTheLottoGame() {
         if (inputUserNumbers != null && lottoNumbers != null) {
             System.out.println(lottoMessageGenerator.printWinningMessage(lottoNumbers, inputUserNumbers));
         } else {
             System.err.println("Initialization failed. Unable to display results.");
         }
     }
-
 }

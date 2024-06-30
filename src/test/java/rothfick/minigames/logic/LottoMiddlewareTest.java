@@ -4,16 +4,11 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import rothfick.minigames.reader.LottoInputReader;
 import rothfick.minigames.util.LottoGenerator;
 import rothfick.minigames.util.LottoMessageGenerator;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,39 +16,47 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class LottoMiddlewareTest {
-    @Mock
     private LottoInputReader inputReader;
-
-    @Mock
     private LottoGenerator generator;
-
-    @Mock
     private LottoMessageGenerator messageGenerator;
-
-    @InjectMocks
     private LottoMiddleware lottoMiddleware;
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.initMocks(this); // Inicjalizacja mocków
-
-        // Ustawienie inputReader w lottoMiddleware na mock
-        lottoMiddleware.setInputReader(inputReader);
+        inputReader = mock(LottoInputReader.class);
+        generator = mock(LottoGenerator.class);
+        messageGenerator = mock(LottoMessageGenerator.class);
+        lottoMiddleware = new LottoMiddleware(inputReader, generator, messageGenerator);
     }
 
     @AfterEach
     void tearDown() {
-        // Czyszczenie po każdym teście
-        reset(inputReader, generator, messageGenerator);
+        inputReader = null;
+        generator = null;
+        messageGenerator = null;
+        lottoMiddleware = null;
     }
 
     @Test
     void testRunLottoGame_Success() throws IOException {
         // Given
-        Set<Integer> inputUserNumbers = Set.of(1, 2, 3, 4, 5, 6);
-        Set<Integer> lottoNumbers = Set.of(10, 20, 30, 40, 50, 60);
+        Set<Integer> inputUserNumbers = new HashSet<>();
+        inputUserNumbers.add(1);
+        inputUserNumbers.add(2);
+        inputUserNumbers.add(3);
+        inputUserNumbers.add(4);
+        inputUserNumbers.add(5);
+        inputUserNumbers.add(6);
 
-        // Mockowanie zachowania inputReader, generatora i messageGeneratora
+        Set<Integer> lottoNumbers = new HashSet<>();
+        lottoNumbers.add(10);
+        lottoNumbers.add(20);
+        lottoNumbers.add(30);
+        lottoNumbers.add(40);
+        lottoNumbers.add(50);
+        lottoNumbers.add(60);
+
+        // Mock behavior
         when(inputReader.getSixNumbersFromUser()).thenReturn(inputUserNumbers);
         when(generator.generateLottoNumbers()).thenReturn(lottoNumbers);
         when(messageGenerator.printWinningMessage(lottoNumbers, inputUserNumbers)).thenReturn("Test message");
@@ -62,11 +65,10 @@ public class LottoMiddlewareTest {
         lottoMiddleware.runLottoGame();
 
         // Then
-        verify(inputReader).getSixNumbersFromUser(); // Sprawdzenie czy getSixNumbersFromUser zostało wywołane
-        verify(generator).generateLottoNumbers(); // Sprawdzenie czy generateLottoNumbers zostało wywołane
-        verify(messageGenerator).printWinningMessage(lottoNumbers, inputUserNumbers); // Sprawdzenie czy printWinningMessage zostało wywołane
-
-        // Dodatkowe asercje na podstawie rzeczywistego zachowania aplikacji
+        verify(inputReader).getSixNumbersFromUser();
+        verify(generator).generateLottoNumbers();
+        verify(messageGenerator).printWinningMessage(lottoNumbers, inputUserNumbers);
+        // Additional assertions based on the actual behavior
     }
 
     @Test
@@ -76,17 +78,66 @@ public class LottoMiddlewareTest {
         ByteArrayInputStream in = new ByteArrayInputStream("1\n2\n3\n4\n5\n6\n".getBytes());
         System.setIn(in);
 
-        // Mockowanie rzucenia IOException przez inputReader
+        // Mock behavior
         when(inputReader.getSixNumbersFromUser()).thenThrow(IOException.class);
 
         // When
         Executable executable = () -> lottoMiddleware.runLottoGame();
 
         // Then
-        assertThrows(IOException.class, executable); // Sprawdzenie czy metoda rzuciła IOException
+        assertThrows(IOException.class, executable);
 
-        // Sprzątanie po sobie
+        // Clean up
         in.close();
         System.setIn(sysInBackup);
+    }
+
+    @Test
+    void testSeeResultsOfTheLottoGame_Success() {
+        // Given
+        Set<Integer> inputUserNumbers = new HashSet<>();
+        inputUserNumbers.add(1);
+        inputUserNumbers.add(2);
+        inputUserNumbers.add(3);
+        inputUserNumbers.add(4);
+        inputUserNumbers.add(5);
+        inputUserNumbers.add(6);
+
+        Set<Integer> lottoNumbers = new HashSet<>();
+        lottoNumbers.add(10);
+        lottoNumbers.add(20);
+        lottoNumbers.add(30);
+        lottoNumbers.add(40);
+        lottoNumbers.add(50);
+        lottoNumbers.add(60);
+
+        String expectedMessage = "Test message";
+
+        // Mock behavior
+        lottoMiddleware.setInputUserNumbers(inputUserNumbers);
+        lottoMiddleware.setLottoNumbers(lottoNumbers);
+        when(messageGenerator.printWinningMessage(lottoNumbers, inputUserNumbers)).thenReturn(expectedMessage);
+
+        // When
+        lottoMiddleware.seeResultsOfTheLottoGame();
+
+        // Then
+        assertEquals(expectedMessage, outContent.toString().trim());
+    }
+
+    // Helper method to redirect System.out to a string for testing
+    private final InputStream sysInBackup = System.in;
+    private ByteArrayInputStream in;
+    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+
+    @BeforeEach
+    public void setUpStreams() {
+        System.setOut(new PrintStream(outContent));
+    }
+
+    @AfterEach
+    public void restoreStreams() {
+        System.setIn(sysInBackup);
+        System.setOut(System.out);
     }
 }
