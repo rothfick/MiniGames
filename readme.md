@@ -4,7 +4,7 @@
 
 _MiniGamesRothFick is a Java application that allows users to play a simple Lotto game. It includes several components such as input handling, number generation, and result display using standard input/output._
 
-Features
+**Features**
 
 LottoMiddleware: Manages the core logic of the Lotto game, including user input, number generation, and result display.
 
@@ -16,7 +16,7 @@ LottoMessageGenerator: Generates messages based on the user's guessed numbers an
 
 LottoGame: Implements the Game interface for executing the Lotto game flow.
 
-Prerequisites
+**Prerequisites**
 
 JDK 8 or higher
 
@@ -40,7 +40,7 @@ Build the project using Maven:
 
 mvn clean install
 
-Usage
+**Usage**
 
 Run the MiniGamesApplication class to start the application
 :
@@ -54,10 +54,10 @@ The application will generate Lotto numbers and display the results.
 
 Contributions are welcome! Please fork the repository and create a pull request with your improvements. Make sure to follow the existing code style and write tests for any new functionality.
 
-License 
+**License** 
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-Acknowledgments
+**Acknowledgments**
 
 Thanks to OpenAI for providing the ChatGPT model used to generate this README template.
