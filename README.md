@@ -16,6 +16,7 @@ LottoMessageGenerator: Generates messages based on the user's guessed numbers an
 
 LottoGame: Implements the Game interface for executing the Lotto game flow.
 
+
 **Prerequisites**
 
 JDK 8 or higher
@@ -60,4 +61,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 **Acknowledgments**
 
+
 Thanks to OpenAI for providing the ChatGPT model used to generate this README template.
+
