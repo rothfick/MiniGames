@@ -1,50 +1,46 @@
-# MiniGamesRothFick
+# MiniGames
+*A collection of small Java games for learning and practice.*
 
-## Overview
+[![Java](https://img.shields.io/badge/language-Java-blue.svg)](https://docs.oracle.com/en/java/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Made with love by rothfick](https://img.shields.io/badge/made%20with%20%E2%99%A5%20by-rothfick-darkgreen.svg)](https://github.com/rothfick)
+[![Portfolio](https://img.shields.io/badge/Portfolio-rothfick-purple.svg)](https://github.com/rothfick)
 
-MiniGamesRothFick is a Java application that allows users to play a simple Lotto game. It includes several components such as input handling, number generation, and result display using standard input/output.
+## ✨ Overview
+This repository serves as a learning sandbox for Java development, providing a collection of mini-games built from the ground up. Each game is designed to illustrate fundamental programming concepts, offering a practical environment to hone Java skills through hands-on implementation and experimentation.
 
-## Features
+## 🧱 Tech Stack
+*   **Java:** Primary programming language used for all game logic and application development.
+*   **Maven:** Project management and comprehension tool for building and dependency management.
 
-- **LottoMiddleware**: Manages the core logic of the Lotto game, including user input, number generation, and result display.
-- **LottoGenerator**: Generates random Lotto numbers.
-- **LottoInputReader**: Handles user input for selecting Lotto numbers.
-- **LottoMessageGenerator**: Generates messages based on the user's guessed numbers and the winning numbers.
-- **LottoGame**: Implements the Game interface for executing the Lotto game flow.
+## 🚀 Features
+*   Simple, self-contained mini-games.
+*   Clear and commented source code for easy understanding.
+*   Modular design, allowing for easy expansion with new games.
+*   Starter templates for quick game development.
 
-## Prerequisites
+## 🛠️ Quickstart
+To get started with MiniGames, clone the repository and build the project using Maven:
 
-- JDK 8 or higher
-- Maven 3.x
-
-## Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/MiniGamesRothFick.git
-   ```
-2.Navigate to the project directory:
-```
-cd MiniGamesRothFick
-```
-3. Build the project using Maven:
-
-```
+```bash
+git clone https://github.com/rothfick/MiniGames.git
+cd MiniGames
 mvn clean install
+mvn test
 ```
 
-## Usage
-Run the MiniGamesApplication class to start the application:
+## 🗺️ Project Structure
+The project is structured with a standard Maven layout. The `src/main/java` directory contains the core application code, organized into packages for each mini-game. Test files reside in `src/test/java`, mirroring the main package structure. The `pom.xml` file defines project dependencies and build configurations.
 
-```
-java -cp target/classes rothfick.minigames.MiniGamesApplication
-```
-Follow the on-screen instructions to play the Lotto game:
+## 🧭 Roadmap
+*   [ ] Implement a simple menu system to select games.
+*   [ ] Add a new mini-game (e.g., Tic-Tac-Toe).
+*   [ ] Enhance existing games with additional features or difficulty levels.
+*   [ ] Explore GUI frameworks for graphical game interfaces.
+*   [ ] Set up continuous integration for automated testing.
 
-- Enter six numbers when prompted.
-- The application will generate Lotto numbers and display the results.
-## Contributing
-Contributions are welcome! Please fork the repository and create a pull request with your improvements. Make sure to follow the existing code style and write tests for any new functionality.
+## 👤 Author
+This project was created by rothfick and is part of their public portfolio. You can find more of their work at [https://github.com/rothfick](https://github.com/rothfick).
 
-## License
-This project is licensed under the MIT License - see the LICENSE file for details.
+## 📄 License
+This project is licensed under the MIT License.
